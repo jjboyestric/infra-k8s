@@ -19,15 +19,15 @@ spec:
             - containerPort: 8080
           env:
             - name: DB_ENDPOINT
-              value: mysql-despachos   # o RDS si aplica
+              value: "db-despachos.cuxvsct6tnia.us-east-1.rds.amazonaws.com"
             - name: DB_PORT
               value: "3306"
             - name: DB_NAME
-              value: despachosdb
+              value: "despachosdb"
             - name: DB_USERNAME
-              value: despachosuser
+              value: "admin"
             - name: DB_PASSWORD
-              value: despachospass
+              value: "contramuysecreta777"
 ---
 apiVersion: v1
 kind: Service
