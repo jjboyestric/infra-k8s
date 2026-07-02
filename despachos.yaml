@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-despachos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: back-despachos
+  template:
+    metadata:
+      labels:
+        app: back-despachos
+    spec:
+      containers:
+        - name: back-despachos
+          image: juanjoelproxdlol/back-despachos:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_ENDPOINT
+              value: mysql-despachos   # o RDS si aplica
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: despachosdb
+            - name: DB_USERNAME
+              value: despachosuser
+            - name: DB_PASSWORD
+              value: despachospass
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-despachos-service
+spec:
+  selector:
+    app: back-despachos
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-ventas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: back-ventas
+  template:
+    metadata:
+      labels:
+        app: back-ventas
+    spec:
+      containers:
+        - name: back-ventas
+          image: juanjoelproxdlol/back-ventas:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_ENDPOINT
+              value: mysql-ventas
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_NAME
+              value: ventasdb
+            - name: DB_USERNAME
+              value: ventasuser
+            - name: DB_PASSWORD
+              value: ventaspass
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-ventas-service
+spec:
+  selector:
+    app: back-ventas
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP
